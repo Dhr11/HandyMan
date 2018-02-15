@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QPushButton, QAc
 from PyQt5.uic.properties import QtGui
 from PyQt5.QtWidgets import QFontDialog, QColorDialog, QCalendarWidget, QTextEdit, QFileDialog
 from ui_editor import Editwindow
+from Event_Diary import event_diary_window
 import common as cm
 
 class window(QMainWindow):
@@ -33,15 +34,22 @@ class window(QMainWindow):
         editorAction.setStatusTip('Open Editor')
         editorAction.triggered.connect(self.editopen)
         
-
+        diaryAction = QAction(QIcon(os.path.join(cm.LOGO_DIR,'event_planner.png')), 'exit', self)
+        diaryAction.setShortcut('Ctrl+D')
+        diaryAction.setStatusTip('Open Diary')
+        diaryAction.triggered.connect(self.diaryopen)    
+    
         self.toolBar = self.addToolBar('Extraction')
         self.toolBar.addAction(exitAction)
         self.toolBar.addAction(editorAction)
-
+        self.toolBar.addAction(diaryAction)
         self.show() 
        
     def editopen(self):
         editor= Editwindow(self)
+    
+    def diaryopen(self):
+        diary=event_diary_window(self)    
             
     def close_application(self):
         choice = QMessageBox.question(self, 'Message',
