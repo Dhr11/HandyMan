@@ -2,7 +2,7 @@
 
 import sys, os
 from PyQt5.QtWidgets import QMainWindow, QApplication, qApp, QWidget,QFileDialog, QGridLayout, QPushButton, QLabel, QLineEdit, QTextEdit, QMessageBox
-from PyQt5.QtWidgets import QTableView, QCalendarWidget, QDoubleSpinBox, QLabel, QVBoxLayout, QHBoxLayout
+from PyQt5.QtWidgets import QTableView, QCalendarWidget, QDoubleSpinBox, QLabel, QVBoxLayout, QHBoxLayout, QAbstractItemView
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QCoreApplication, Qt, QDateTime, QTime, QDate
 from sys import argv, exit
@@ -72,22 +72,22 @@ class event_diary_window(QMainWindow):
     
     def init_widgets(self):
         if(self.curindex.column()==0):
-            curdatetime= QDateTime.fromString(self.curindex.data())
-            self.cal.setSelectedDate(curdatetime.date())
+            givendatetime= QDateTime.fromString(self.curindex.data())
+            self.cal.setSelectedDate(givendatetime.date())
             self.messageEdit.setLineWidth(140)
             self.messageEdit.setText(self.adjacent.data())
-            self.hrspinbox.setValue(curdatetime.time().hour())
-            self.minspinbox.setValue(curdatetime.time().minute())
-            self.secspinbox.setValue(curdatetime.time().second())
+            self.hrspinbox.setValue(givendatetime.time().hour())
+            self.minspinbox.setValue(givendatetime.time().minute())
+            self.secspinbox.setValue(givendatetime.time().second())
         else:
             print(self.adjacent.data())
-            curdatetime= QDateTime.fromString(self.adjacent.data())
-            self.cal.setSelectedDate(curdatetime.date())
+            givendatetime= QDateTime.fromString(self.adjacent.data())
+            self.cal.setSelectedDate(givendatetime.date())
             self.messageEdit.setLineWidth(140)
             self.messageEdit.setText(self.curindex.data())
-            self.hrspinbox.setValue(curdatetime.time().hour())
-            self.minspinbox.setValue(curdatetime.time().minute())
-            self.secspinbox.setValue(curdatetime.time().second())
+            self.hrspinbox.setValue(givendatetime.time().hour())
+            self.minspinbox.setValue(givendatetime.time().minute())
+            self.secspinbox.setValue(givendatetime.time().second())
     def edit_cell(self):
         
         self.button_add.setDisabled(True)
@@ -218,7 +218,7 @@ class event_diary_window(QMainWindow):
         self.view1= QTableView()
         self.view1.setModel(self.model1)        
         self.view1.setWindowTitle("Current Notes")
-
+        self.view1.setEditTriggers(QAbstractItemView.NoEditTriggers)
         
         
     def insert_db(self):
