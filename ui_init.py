@@ -7,6 +7,7 @@ from PyQt5.uic.properties import QtGui
 from PyQt5.QtWidgets import QFontDialog, QColorDialog, QCalendarWidget, QTextEdit, QFileDialog
 from ui_editor import Editwindow
 from Event_Diary import event_diary_window
+from SaleFisher import sale_fisher_window
 import common as cm
 
 class window(QMainWindow):
@@ -30,23 +31,33 @@ class window(QMainWindow):
         exitAction.triggered.connect(self.close_application)
 
         editorAction = QAction(QIcon(os.path.join(cm.LOGO_DIR,'editor_logo.png')), 'exit', self)
-        editorAction.setShortcut('Ctrl+E')
+        editorAction.setShortcut('Ctrl+1')
         editorAction.setStatusTip('Open Editor')
         editorAction.triggered.connect(self.editopen)
         
         diaryAction = QAction(QIcon(os.path.join(cm.LOGO_DIR,'event_planner.png')), 'exit', self)
-        diaryAction.setShortcut('Ctrl+D')
+        diaryAction.setShortcut('Ctrl+2')
         diaryAction.setStatusTip('Open Diary')
         diaryAction.triggered.connect(self.diaryopen)    
-    
+        
+        saleAction = QAction(QIcon(os.path.join(cm.LOGO_DIR,'sale_fisher.png')), 'Sales', self)
+        saleAction.setShortcut('Ctrl+3')
+        saleAction.setStatusTip('Open Sale Fisher')
+        saleAction.triggered.connect(self.fisheropen)    
+        
+        
         self.toolBar = self.addToolBar('Extraction')
         self.toolBar.addAction(exitAction)
         self.toolBar.addAction(editorAction)
         self.toolBar.addAction(diaryAction)
+        self.toolBar.addAction(saleAction)
         self.show() 
        
     def editopen(self):
         editor= Editwindow(self)
+    
+    def fisheropen(self):
+        sale_fisher= sale_fisher_window(self)
     
     def diaryopen(self):
         diary=event_diary_window(self)    
